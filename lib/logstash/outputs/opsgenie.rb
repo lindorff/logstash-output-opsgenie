@@ -151,9 +151,9 @@ class LogStash::Outputs::OpsGenie < LogStash::Outputs::Base
 
   public
   def populateAliasOrId(event, params)
-    alertAlias = event.get(@aliasAttribute) if event.get(@aliasAttribute)
+    alertAlias = event[@aliasAttribute] if event[@aliasAttribute]
     if alertAlias == nil then
-      alertId = event.get(@alertIdAttribute) if event.get(@alertIdAttribute)
+      alertId = event[@alertIdAttribute] if event[@alertIdAttribute]
       if !(alertId == nil) then
         @identifierType = 'id'
         @identifier = alertId
@@ -188,7 +188,7 @@ class LogStash::Outputs::OpsGenie < LogStash::Outputs::Base
     return unless output?(event)
 
     @logger.info("processing #{event}")
-    opsGenieAction = event.get(@actionAttribute) if event.get(@actionAttribute)
+    opsGenieAction = event[@actionAttribute] if event[@actionAttribute]
     if opsGenieAction then
       params = {}
       populateCommonContent(params, event)
@@ -217,16 +217,16 @@ class LogStash::Outputs::OpsGenie < LogStash::Outputs::Base
 
   private
   def populateCreateAlertContent(params, event)
-    params['message'] = event.get(@messageAttribute) if event.get(@messageAttribute)
-    params['alias'] = event.get(@aliasAttribute) if event.get(@aliasAttribute)
-    params['teams'] = event.get(@teamsAttribute) if event.get(@teamsAttribute)
-    params['visibleTo'] = event.get(@visibleToAttribute) if event.get(@visibleToAttribute)
-    params['description'] = event.get(@descriptionAttribute) if event.get(@descriptionAttribute)
-    params['actions'] = event.get(@actionsAttribute) if event.get(@actionsAttribute)
-    params['tags'] = event.get(@tagsAttribute) if event.get(@tagsAttribute)
-    params['entity'] = event.get(@entityAttribute) if event.get(@entityAttribute)
-    params['priority'] = event.get(@priorityAttribute) if event.get(@priorityAttribute)
-    params['details'] = event.get(@detailsAttribute) if event.get(@detailsAttribute)
+    params['message'] = event[@messageAttribute] if event[@messageAttribute]
+    params['alias'] = event[@aliasAttribute] if event[@aliasAttribute]
+    params['teams'] = event[@teamsAttribute] if event[@teamsAttribute]
+    params['visibleTo'] = event[@visibleToAttribute] if event[@visibleToAttribute]
+    params['description'] = event[@descriptionAttribute] if event[@descriptionAttribute]
+    params['actions'] = event[@actionsAttribute] if event[@actionsAttribute]
+    params['tags'] = event[@tagsAttribute] if event[@tagsAttribute]
+    params['entity'] = event[@entityAttribute] if event[@entityAttribute]
+    params['priority'] = event[@priorityAttribute] if event[@priorityAttribute]
+    params['details'] = event[@detailsAttribute] if event[@detailsAttribute]
 
 
     return params
@@ -235,9 +235,9 @@ class LogStash::Outputs::OpsGenie < LogStash::Outputs::Base
   private
   def populateCommonContent(params, event)
     populateAliasOrId(event, params)
-    params['source'] = event.get(@sourceAttribute) if event.get(@sourceAttribute)
-    params['user'] = event.get(@userAttribute) if event.get(@userAttribute)
-    params['note'] = event.get(@noteAttribute) if event.get(@noteAttribute)
+    params['source'] = event[@sourceAttribute] if event[@sourceAttribute]
+    params['user'] = event[@userAttribute] if event[@userAttribute]
+    params['note'] = event[@noteAttribute] if event[@noteAttribute]
   end
 
 end # class LogStash::Outputs::OpsGenie
